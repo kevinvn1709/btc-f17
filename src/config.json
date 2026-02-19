@@ -1,0 +1,50 @@
+{
+  "site": {
+    "title": "Chợ Phú Nhuận - Ký Ức",
+    "subtitle": "Nơi lưu giữ ký ức qua từng thời gian",
+    "startYear": 2019,
+    "location": "Chợ Phú Nhuận, Sài Gòn"
+  },
+  "memories": [
+    {
+      "year": 2026,
+      "post": "Giữa ngổn ngang của chợ Phú Nhuận, nơi tụi tui lớn lên, là nơi sum họp, là truyền thống, là tình thân, là niềm vui và sự chào đón. Là nơi 1 năm tụi tui gặp nhau 1 lần. Nơi đây chào đón các thành viên đã bay xa, và có thể trở về.",
+      "author": "Dang Hoang Duc"
+    },
+    {
+      "year": 2025,
+      "post": "Chợ Phú Nhuận cái tên vừa thân thuộc vừa gần gũi. Chớp mắt cái là đã 6 năm cái truyền thống \"Ê năm nay ra chụp hình chợ Phú Nhuận nha\"",
+      "author": "Khoa Đính Nguyễn"
+    },
+    {
+      "year": 2024,
+      "post": "Chúng tôi - những tâm hồn của BTC, đã quây quần bên nhau tìm kiếm một sứ mệnh chung cho thập kỷ tới.",
+      "author": "Quang Vinh"
+    },
+    {
+      "year": 2023,
+      "post": "... Vượt ngàn cây số sau 4 năm xa xứ để về có 1 tấm hình bắt trend cho bớt cay cú ^^",
+      "author": "Truong Le Loi"
+    },
+    {
+      "year": 2022,
+      "post": "Cả đám này quen biết nhau đã gần 20 năm. Và mỗi ngóc ngách của cái chợ Phú Nhuận đều ghi lại kỷ niệm của những đứa đã ngoài 30 này.",
+      "author": "Dao Vu Thuc Doan"
+    },
+    {
+      "year": 2021,
+      "post": "Tiếp nối truyền thống, chợ Phú Nhuận vẫn chưa bị dở đi, để cả đám còn ra chụp được 1 tấm trong trạng thái bình thường mới. Năm sau phát huy tiếp nhé!",
+      "author": "Quynh Dinomosic"
+    },
+    {
+      "year": 2020,
+      "post": "Vẫn là Tết ở chợ, Tết đoàn viên.\nLà Tết cũng những đứa nhóc giờ đã 30 rồi, nhiều lo toan, mưu sinh nhưng vẫn quay quần bên nhau mỗi ngày mùng 1 Tết.",
+      "author": "Minh Trí Nguyễn"
+    },
+    {
+      "year": 2019,
+      "post": "Hết Tết!\nKhu mình sống. Bạn bè mình. Chỉ có mấy ngày này Chợ mới giải tán đám đông.\nCó những thứ lẽ ra nên làm từ 10 năm trước... nhưng thà có bắt đầu còn hơn không!",
+      "author": "Dang Hoang Duc"
+    }
+  ]
+}

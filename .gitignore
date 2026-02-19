@@ -1,4 +1,19 @@
-.DS_Store
-*.log
+# Dependencies
 node_modules/
-.env
+package-lock.json
+
+# Build output only (not source images)
+public/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log

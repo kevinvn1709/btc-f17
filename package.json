@@ -1,0 +1,17 @@
+{
+  "name": "btc-f17-memory-wall",
+  "version": "1.0.0",
+  "description": "Chợ Phú Nhuận Memory Wall - Static Site Builder",
+  "main": "src/builder.js",
+  "scripts": {
+    "build": "node src/builder.js",
+    "dev": "node src/builder.js && open public/index.html"
+  },
+  "keywords": ["static-site", "memory-wall", "photo-gallery"],
+  "author": "F17 Team",
+  "license": "MIT",
+  "dependencies": {
+    "sharp": "^0.33.0"
+  },
+  "devDependencies": {}
+}

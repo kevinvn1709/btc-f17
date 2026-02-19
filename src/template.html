@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{SITE_TITLE}} | Memory Wall</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Lora:wght@400;500;600;700&family=Montserrat:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background texture overlay -->
+    <div class="paper-texture"></div>
+    <div class="market-wall-background"></div>
+    
+    <!-- Header Section -->
+    <header class="header">
+        <div class="retro-border-top"></div>
+        <div class="retro-corner corner-tl"></div>
+        <div class="retro-corner corner-tr"></div>
+        <div class="retro-corner corner-bl"></div>
+        <div class="retro-corner corner-br"></div>
+        <div class="container">
+            <div class="header-badge">Est. {{START_YEAR}}</div>
+            <h1 class="main-title">CHỢ PHÚ NHUẬN</h1>
+            <div class="title-underline"></div>
+            <p class="subtitle">{{SITE_SUBTITLE}}</p>
+            <div class="year-range">{{YEAR_RANGE}}</div>
+        </div>
+        <div class="retro-border-bottom"></div>
+    </header>
+
+    <!-- Timeline Section -->
+    <main class="timeline-section">
+        <div class="container">
+{{MEMORY_CARDS}}
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-divider-top"></div>
+            <div class="footer-content">
+                <div class="footer-stamp">
+                    <div class="stamp-inner">
+                        <div class="stamp-circle">F17</div>
+                        <div class="stamp-text">Est. 2019</div>
+                    </div>
+                </div>
+                <div class="footer-info">
+                    <p class="footer-tagline">tạo bởi những người anh em @F17</p>
+                    <p class="footer-location">📍 {{LOCATION}}</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <div class="lightbox-container">
+            <button class="lightbox-nav lightbox-prev" id="lightbox-prev">
+                <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                </svg>
+            </button>
+            <img class="lightbox-content" id="lightbox-img">
+            <button class="lightbox-nav lightbox-next" id="lightbox-next">
+                <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor">
+                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                </svg>
+            </button>
+        </div>
+        <div class="lightbox-caption" id="lightbox-caption"></div>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
