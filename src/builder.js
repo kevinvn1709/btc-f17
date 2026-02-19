@@ -26,8 +26,10 @@ console.log('🚀 Building Memory Wall...\n');
  */
 function detectYearImages(year) {
     const yearFolder = path.join(IMAGES_SOURCE_DIR, year.toString());
+    console.log(`🔍 [DEBUG] Checking folder: ${yearFolder}`);
+    
     if (!fs.existsSync(yearFolder)) {
-        console.warn(`⚠️  No images found for year ${year}`);
+        console.warn(`⚠️  No images found for year ${year} - folder doesn't exist`);
         return [];
     }
     
@@ -35,6 +37,7 @@ function detectYearImages(year) {
         .filter(f => /\.(jpg|jpeg|png)$/i.test(f))
         .sort();
     
+    console.log(`✓ [DEBUG] Found ${files.length} images for ${year}: ${files.join(', ')}`);
     return files;
 }
 
@@ -58,9 +61,14 @@ async function optimizeImage(sourcePath, targetPath, options = {}) {
  */
 async function processYearImages(year) {
     const images = detectYearImages(year);
-    if (images.length === 0) return;
+    if (images.length === 0) {
+        console.log(`⏩ [DEBUG] Skipping ${year} - no images detected`);
+        return;
+    }
     
     const yearPublicDir = path.join(IMAGES_PUBLIC_DIR, year.toString());
+    console.log(`📂 [DEBUG] Creating public dir: ${yearPublicDir}`);
+    
     if (!fs.existsSync(yearPublicDir)) {
         fs.mkdirSync(yearPublicDir, { recursive: true });
     }
@@ -71,7 +79,9 @@ async function processYearImages(year) {
         const sourcePath = path.join(IMAGES_SOURCE_DIR, year.toString(), img);
         const targetPath = path.join(yearPublicDir, img);
         
+        console.log(`   → Optimizing ${img}...`);
         await optimizeImage(sourcePath, targetPath);
+        console.log(`   ✓ ${img} saved`);
     }
 }
 
@@ -85,6 +95,8 @@ function generateMemoryCard(memory, index) {
     // Detect image count for this year
     const images = detectYearImages(memory.year);
     const imageCount = images.length > 0 ? images.length : 1;
+    
+    console.log(`🎴 [DEBUG] Memory card ${memory.year}: ${imageCount} images, tape: ${tapeClass}`);
     
     return `
             <!-- Year ${memory.year} -->
@@ -156,9 +168,15 @@ function copyStaticFiles() {
  */
 async function build() {
     try {
+        console.log(`🔍 [DEBUG] ROOT: ${ROOT}`);
+        console.log(`🔍 [DEBUG] IMAGES_SOURCE_DIR: ${IMAGES_SOURCE_DIR}`);
+        console.log(`🔍 [DEBUG] PUBLIC_DIR: ${PUBLIC_DIR}`);
+        console.log(`🔍 [DEBUG] Total memories to process: ${config.memories.length}\n`);
+        
         // 1. Process images
         console.log('📦 Step 1: Optimizing images...');
         for (const memory of config.memories) {
+            console.log(`\n--- Processing year ${memory.year} ---`);
             await processYearImages(memory.year);
         }
         
@@ -178,6 +196,7 @@ async function build() {
         
     } catch (error) {
         console.error('\n❌ Build failed:', error.message);
+        console.error('Stack trace:', error.stack);
         process.exit(1);
     }
 }
