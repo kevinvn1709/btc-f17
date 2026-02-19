@@ -17,73 +17,34 @@ let currentImageIndex = 0;
 let totalImages = 0;
 let memoryNote = '';
 
-// Cache for detected image counts
-const imagesByYear = {};
-
 // Get all polaroid images
 const polaroids = document.querySelectorAll('.polaroid');
 
 // Add click event to each polaroid
 polaroids.forEach(polaroid => {
-    polaroid.addEventListener('click', async function() {
+    polaroid.addEventListener('click', function() {
+        const memoryCard = this.closest('.memory-card');
         const yearLabel = this.querySelector('.year-label').textContent;
         const note = this.querySelector('.memory-note').textContent;
+        const imageCount = parseInt(memoryCard.dataset.imageCount) || 1;
         
         // Open slideshow for this year
-        await openSlideshow(yearLabel, note);
+        openSlideshow(yearLabel, note, imageCount);
     });
 });
 
-// Function to detect how many images exist for a year
-async function detectImageCount(year) {
-    // Check cache first
-    if (imagesByYear[year]) {
-        return imagesByYear[year];
-    }
-    
-    let count = 0;
-    let maxAttempts = 20; // Giới hạn tìm kiếm tối đa 20 ảnh
-    
-    for (let i = 1; i <= maxAttempts; i++) {
-        const imgPath = `images/${year}/${year}-${i}.jpg`;
-        const exists = await checkImageExists(imgPath);
-        
-        if (exists) {
-            count = i;
-        } else {
-            break; // Dừng khi không tìm thấy ảnh tiếp theo
-        }
-    }
-    
-    // Cache kết quả
-    imagesByYear[year] = count > 0 ? count : 1;
-    return imagesByYear[year];
-}
-
-// Function to check if image exists
-function checkImageExists(url) {
-    return new Promise((resolve) => {
-        const img = new Image();
-        img.onload = () => resolve(true);
-        img.onerror = () => resolve(false);
-        img.src = url;
-    });
-}
-
-// Function to open slideshow
-async function openSlideshow(year, note) {
+// Function to open slideshow (no async detection needed)
+function openSlideshow(year, note, imageCount) {
     currentYear = year;
     memoryNote = note;
     currentImageIndex = 0;
+    totalImages = imageCount;
     
-    // Show lightbox with loading state
+    // Show lightbox and display first image immediately
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
     
-    // Detect total images for this year
-    totalImages = await detectImageCount(year);
-    
-    // Display first image
+    // Display first image instantly - no delay!
     updateSlideshow();
 }
 

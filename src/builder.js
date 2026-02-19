@@ -82,9 +82,13 @@ function generateMemoryCard(memory, index) {
     const tapeClasses = ['tape-right', 'tape-left', 'tape-top'];
     const tapeClass = tapeClasses[index % tapeClasses.length];
     
+    // Detect image count for this year
+    const images = detectYearImages(memory.year);
+    const imageCount = images.length > 0 ? images.length : 1;
+    
     return `
             <!-- Year ${memory.year} -->
-            <div class="memory-card" data-year="${memory.year}">
+            <div class="memory-card" data-year="${memory.year}" data-image-count="${imageCount}">
                 <div class="polaroid">
                     <div class="photo-container">
                         <img src="images/${memory.year}/${memory.year}-1.jpg" alt="Kỷ niệm ${memory.year}">
