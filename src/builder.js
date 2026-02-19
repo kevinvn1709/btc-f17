@@ -8,6 +8,7 @@
 const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
+const { execSync } = require('child_process');
 
 // Paths
 const ROOT = path.join(__dirname, '..');
@@ -20,6 +21,36 @@ const IMAGES_PUBLIC_DIR = path.join(PUBLIC_DIR, 'images');
 const config = JSON.parse(fs.readFileSync(path.join(SRC_DIR, 'config.json'), 'utf-8'));
 
 console.log('🚀 Building Memory Wall...\n');
+
+/**
+ * Get build metadata (git info, timestamp)
+ */
+function getBuildMetadata() {
+    try {
+        const commitHash = execSync('git rev-parse HEAD').toString().trim();
+        const commitShort = execSync('git rev-parse --short HEAD').toString().trim();
+        const branch = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
+        const commitDate = execSync('git log -1 --format=%cd --date=iso').toString().trim();
+        const buildDate = new Date().toISOString();
+        
+        return {
+            commitHash,
+            commitShort,
+            branch,
+            commitDate,
+            buildDate
+        };
+    } catch (error) {
+        console.warn('⚠️  Could not get git info:', error.message);
+        return {
+            commitHash: 'unknown',
+            commitShort: 'unknown',
+            branch: 'unknown',
+            commitDate: 'unknown',
+            buildDate: new Date().toISOString()
+        };
+    }
+}
 
 /**
  * Detect all images in a year folder
@@ -121,6 +152,9 @@ function generateMemoryCard(memory, index) {
 function generateHTML() {
     const template = fs.readFileSync(path.join(SRC_DIR, 'template.html'), 'utf-8');
     
+    // Get build metadata
+    const metadata = getBuildMetadata();
+    
     // Sort memories by year descending
     const sortedMemories = [...config.memories].sort((a, b) => b.year - a.year);
     
@@ -132,6 +166,16 @@ function generateHTML() {
     // Year range - keep "nay" instead of current year
     const yearRange = `${config.site.startYear} - nay`;
     
+    // Build info comment
+    const buildInfo = `
+<!-- 
+    Build Info:
+    - Commit: ${metadata.commitShort} (${metadata.commitHash})
+    - Branch: ${metadata.branch}
+    - Commit Date: ${metadata.commitDate}
+    - Build Date: ${metadata.buildDate}
+-->`;
+    
     // Replace placeholders in template
     let html = template
         .replace('{{SITE_TITLE}}', config.site.title)
@@ -139,7 +183,9 @@ function generateHTML() {
         .replace('{{YEAR_RANGE}}', yearRange)
         .replace('{{START_YEAR}}', config.site.startYear)
         .replace('{{LOCATION}}', config.site.location)
-        .replace('{{MEMORY_CARDS}}', memoryCardsHTML);
+        .replace('{{MEMORY_CARDS}}', memoryCardsHTML)
+        .replace('</head>', `    <meta name="build-commit" content="${metadata.commitShort}">\n    <meta name="build-date" content="${metadata.buildDate}">\n</head>`)
+        .replace('</body>', `${buildInfo}\n</body>`);
     
     return html;
 }
