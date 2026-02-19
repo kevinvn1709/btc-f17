@@ -161,6 +161,11 @@ function copyStaticFiles() {
             console.log(`   ✓ ${file}`);
         }
     }
+    
+    // Create .nojekyll file to disable Jekyll on GitHub Pages
+    const nojekyllPath = path.join(PUBLIC_DIR, '.nojekyll');
+    fs.writeFileSync(nojekyllPath, '');
+    console.log('   ✓ .nojekyll (disable Jekyll)');
 }
 
 /**
