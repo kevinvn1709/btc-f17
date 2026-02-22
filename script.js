@@ -51,7 +51,30 @@ function openSlideshow(year, note, imageCount) {
 // Function to update slideshow display
 function updateSlideshow() {
     const imgSrc = `images/${currentYear}/${currentYear}-${currentImageIndex + 1}.jpg`;
-    lightboxImg.src = imgSrc;
+    
+    // Add loading state
+    lightboxImg.style.opacity = '0.3';
+    
+    // Create a new image to preload
+    const newImg = new Image();
+    newImg.onload = () => {
+        // Once loaded, update the src
+        lightboxImg.src = imgSrc;
+        lightboxImg.style.opacity = '1';
+        
+        // Add slide animation
+        lightboxImg.style.animation = 'none';
+        setTimeout(() => {
+            lightboxImg.style.animation = 'zoomIn 0.3s ease';
+        }, 10);
+    };
+    newImg.onerror = () => {
+        // If error, still show something
+        lightboxImg.src = imgSrc;
+        lightboxImg.style.opacity = '1';
+    };
+    newImg.src = imgSrc;
+    
     lightboxCaption.innerHTML = `<strong>${currentYear}</strong><br>${memoryNote}`;
     
     // Update counter
@@ -70,12 +93,6 @@ function updateSlideshow() {
         lightboxPrev.classList.remove('hidden');
         lightboxNext.classList.remove('hidden');
     }
-    
-    // Add slide animation
-    lightboxImg.style.animation = 'none';
-    setTimeout(() => {
-        lightboxImg.style.animation = 'zoomIn 0.3s ease';
-    }, 10);
 }
 
 // Function to show next image
